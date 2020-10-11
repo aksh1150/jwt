@@ -4,29 +4,14 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 import AuthService from "../services/auth.service";
-import { makeStyles } from "@material-ui/core/styles";
-import { Alert } from "@material-ui/lab";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { FormControl } from "@material-ui/core";
-import { InputLabel } from "@material-ui/core";
-import { FormHelperText } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    margin: "auto",
-    maxWidth: 500,
-  },
-}));
 const required = (value) => {
   if (!value) {
     return (
-      <Alert severity="warning">
-        Warning — <strong>This field is required!</strong>
-      </Alert>
+      <div className="alert alert-warning" role="alert">
+        Warning — This field is required!
+      </div>
     );
   }
 };
@@ -79,88 +64,71 @@ const Login = (props) => {
       setLoading(false);
     }
   };
-  const classes = useStyles();
+
   return (
-    <div style={{ padding: 20 }}>
-      <Paper className={classes.paper}>
-        <Grid
-          container
-          spacing={2}
-          direction="column"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          <Grid item>
-            <img
-              src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-              alt="profile-img"
-              className="profile-img-card"
+    <div className="col-md-12 mt-4">
+      <div
+        className="card card-body p-4 text-center mx-auto d-block"
+        style={{ width: "300px" }}
+      >
+        <img
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          alt="profile-img"
+          className="rounded-circle mx-auto d-block"
+          style={{ width: "200px" }}
+        />
+
+        <Form onSubmit={handleLogin} ref={form} className="mt-4 text-left">
+          <div className="form-group">
+            <label htmlFor="username" className="card-text">
+              Username
+            </label>
+            <Input
+              type="text"
+              className="form-control"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              validations={[required]}
             />
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Form onSubmit={handleLogin} ref={form}>
-              <Grid
-                item
-                xs
-                container
-                direction="column"
-                justify="space-evenly"
-                alignItems="center"
-                spacing={2}
-              >
-                <Grid item>
-                  <FormControl fullWidth>
-                    <InputLabel htmlFor="my-input">Email address</InputLabel>
-                    <Input
-                      type="text"
-                      id="email"
-                      aria-describedby="emailid"
-                      name="username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      validations={[required]}
-                    />
-                    <FormHelperText id="emailid">
-                      Email required!
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item>
-                  <FormControl fullWidth>
-                    <InputLabel htmlFor="my-input">Password</InputLabel>
-                    <Input
-                      type="password"
-                      id="password"
-                      aria-describedby="pass"
-                      name="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      validations={[required]}
-                    />
-                    <FormHelperText id="pass">
-                      Password required!
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
+          </div>
 
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disabled={loading}
-                  >
-                    {loading && <CircularProgress />}
-                    Login
-                  </Button>
-                </Grid>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <Input
+              type="password"
+              className="form-control"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              validations={[required]}
+            />
+          </div>
 
-                {message && <Alert severity="error">{message}</Alert>}
-              </Grid>
-              <CheckButton style={{ display: "none" }} ref={checkBtn} />
-            </Form>
-          </Grid>
-        </Grid>
-      </Paper>
+          <div className="form-group text-center mt-4">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={loading}
+              style={{ width: "150px" }}
+            >
+              {loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              Login
+            </Button>
+          </div>
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          )}
+          <CheckButton style={{ display: "none" }} ref={checkBtn} />
+        </Form>
+      </div>
     </div>
   );
 };
