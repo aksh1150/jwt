@@ -94,11 +94,7 @@ const Register = (props) => {
 
   return (
     <div className="col-md-12 mt-4">
-      <h2 className="p-4">New user register here:</h2>
-      <div
-        className="card card-body p-4 text-center mx-auto d-block"
-        style={{ width: "400px" }}
-      >
+      <div className="card card-body p-4 text-center mx-auto d-block">
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
